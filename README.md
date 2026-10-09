@@ -85,3 +85,64 @@ The chain addresses and economics above come from the assignment. The operator
 is responsible for factory distribution, pool setup, Merkle claims and source
 verification; none require token administration or post-launch token settings.
 This project performs no broadcasts or live-chain verification.
+
+## Website
+
+The one-page site of Swarm Tester lives in `site/` and is published from the
+committed export in `dist/` at https://swarmtester.si-md.xyz. It is static
+HTML, CSS and JS with no build step: `site/index.html`, `site/styles.css`,
+`site/app.js` and `site/assets/` (logo, the SIMD panel art, self-hosted latin
+subsets of Inter and IBM Plex Mono). It follows the SIMD Swarm meme template
+(beige hardware panels, green signal accents, a black terminal) personalized
+for $TESTER with the lab-coat blue of the logo as secondary accent, a Swarm Lab
+of Pepe engineers compiling at glowing terminals, and Einstein's machine with
+clickable dials, levers and a BUILD button that launches a coin rocket.
+
+Live data: the page fetches `/simd-coin.json` from its own origin (served by
+SIMD) and paints name, symbol, chain, status, market readouts and the contract
+address. The address is never hardcoded: the contract LCD reads `launching…`
+and the copy button stays disabled until `token` arrives, and the Buy and Chart
+buttons point at the launchpad until `coinUrl` and `chartUrl` arrive. No wallet
+connection, no forms, no trackers, no third-party requests.
+
+### Install, preview, rebuild, publish
+
+Requires Node 20+ and npm. Run inside `site/`:
+
+```sh
+cd site
+npm install            # dev dependency: typescript (for the typecheck only)
+npm run preview        # serves ../dist at http://localhost:4173 with a sample /simd-coin.json
+npm run preview -- --live   # same, with a sample that includes a token and market data
+npm run preview -- --src    # serve the source in site/ instead of dist/
+npm run build          # copies site/ into ../dist and checks the export
+npm run typecheck      # tsc --noEmit on app.js (strict, checkJs)
+npm run check          # headless-Chrome interaction, layout and contrast checks + screenshots
+npm run verify         # build + typecheck + check
+```
+
+To change the site, edit the files in `site/`, run `npm run verify`, and commit
+`site/`, `dist/` and the screenshots. The publisher serves the committed `dist/`
+exactly as it is and does not rebuild, so always rebuild after the last source
+change. Asset URLs are relative (`./assets/...`), so the export also works from
+a subpath or an ENS gateway. Do not commit `site/node_modules`.
+
+`npm run check` needs Playwright: it resolves it from `site/node_modules`, from
+the directory in `$PLAYWRIGHT_DIR`, or from a globally installed
+`@playwright/mcp`; it launches Google Chrome (`PW_CHANNEL=chrome` by default,
+falling back to Playwright's bundled Chromium). The script starts its own local
+server, drives the export at 320, 390, 768 and 1280px, and writes screenshots to
+`artifacts/screenshots/`.
+
+### Validation results
+
+Recorded in `artifacts/validation.md` (coverage of the six Better Interface
+domains, findings, fixes, limitations; `artifacts/` is delivered separately
+from the Git tree, so an identical copy is kept at `site/VALIDATION.md`).
+Final run on the committed source:
+`npm run build` exit 0 (8 files, 306,481 bytes), `npm run typecheck` exit 0,
+`npm run check` 48 passed / 0 failed / 0 skipped, `forge build` and `forge test`
+51 passed. Checks not performed: screen-reader session, forced-colors mode,
+native 200% zoom, physical devices; the published origin's real
+`/simd-coin.json` was mocked. The design system of the final source is
+documented in `DESIGN.md`.

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swarm Tester ($TESTER)</title>
+<meta name="description" content="Swarm Lab is the workshop of the swarm: a hall of retro computers where Pepe engineers build in real time while Pepe Einstein invents the next big thing. $TESTER, built by the Identity.md swarm on the SIMD Launchpad.">
+<meta name="theme-color" content="#d9d6cc">
+<meta property="og:title" content="Swarm Tester ($TESTER)">
+<meta property="og:description" content="Swarm Lab is the workshop of the swarm: a hall of retro computers where Pepe engineers build in real time while Pepe Einstein invents the next big thing.">
+<meta property="og:image" content="https://swarmtester.si-md.xyz/assets/logo.png">
+<meta property="og:url" content="https://swarmtester.si-md.xyz/">
+<meta property="og:type" content="website">
+<link rel="icon" href="./assets/logo.png" type="image/png">
+<link rel="preload" href="./assets/fonts/Inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/IBMPlexMono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./styles.css">
+<!--
+  SIMD Swarm site · MEME template, personalized for Swarm Tester ($TESTER).
+  Visual reference: the Identity.md control room — a wall of beige hardware panels (dials, LCDs,
+  patch cables, oscilloscopes) with green signal accents and a black terminal in the middle.
+  Secondary accent: the electric blue of the lab coat in the coin logo.
+  Live data comes from /simd-coin.json on this same origin; the contract address is never hardcoded.
+-->
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <!-- a Pepe engineer: green face, heavy lids, blue lab coat from the logo -->
+    <symbol id="pepe" viewBox="0 0 32 32">
+      <rect x="5" y="7" width="22" height="17" rx="8" fill="#509030"/>
+      <ellipse cx="12" cy="12" rx="4.2" ry="3.1" fill="#f0f0f0"/>
+      <ellipse cx="21" cy="12" rx="4.2" ry="3.1" fill="#f0f0f0"/>
+      <circle cx="13" cy="12.6" r="1.5" fill="#101010"/>
+      <circle cx="22" cy="12.6" r="1.5" fill="#101010"/>
+      <path d="M7.5 10.4 Q12 8.2 16.2 10.4" stroke="#3b6f22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M16.8 10.4 Q21 8.2 25.5 10.4" stroke="#3b6f22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M9 18.5 Q16 22.5 24 18.5" stroke="#a63a3a" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="7" y="24" width="18" height="8" rx="2" fill="#2b49f2"/>
+      <rect x="14.5" y="24" width="3" height="8" fill="#f0f0f0"/>
+    </symbol>
+    <!-- Pepe Einstein: same frog, white hair and a moustache -->
+    <symbol id="einstein" viewBox="0 0 32 32">
+      <path d="M3 10 Q6 1 11 6 Q16 0 21 6 Q26 1 29 10 Z" fill="#f0f0f0"/>
+      <path d="M2 12 Q0 16 3 18 Z M30 12 Q32 16 29 18 Z" fill="#f0f0f0"/>
+      <rect x="5" y="8" width="22" height="17" rx="8" fill="#509030"/>
+      <ellipse cx="12" cy="13" rx="4.2" ry="3.1" fill="#f0f0f0"/>
+      <ellipse cx="21" cy="13" rx="4.2" ry="3.1" fill="#f0f0f0"/>
+      <circle cx="13" cy="13.6" r="1.5" fill="#101010"/>
+      <circle cx="22" cy="13.6" r="1.5" fill="#101010"/>
+      <path d="M7.5 11.4 Q12 9.2 16.2 11.4" stroke="#3b6f22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M16.8 11.4 Q21 9.2 25.5 11.4" stroke="#3b6f22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M10 18.5 Q16 16.5 22 18.5" stroke="#f0f0f0" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M11 21 Q16 23.5 21 21" stroke="#a63a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <rect x="7" y="25" width="18" height="7" rx="2" fill="#f0f0f0"/>
+      <rect x="14.5" y="25" width="3" height="7" fill="#2b49f2"/>
+    </symbol>
+    <!-- the coin rocket -->
+    <symbol id="rocket-shape" viewBox="0 0 40 84">
+      <path d="M20 2 C30 14 32 26 32 42 L8 42 C8 26 10 14 20 2 Z" fill="#d9d6cc" stroke="#2a2a2a" stroke-width="2"/>
+      <path d="M8 42 L8 60 L32 60 L32 42 Z" fill="#c9c5b8" stroke="#2a2a2a" stroke-width="2"/>
+      <path d="M8 48 L0 64 L8 60 Z M32 48 L40 64 L32 60 Z" fill="#2b49f2" stroke="#2a2a2a" stroke-width="2"/>
+      <circle cx="20" cy="30" r="8" fill="#0c0f0c" stroke="#3cff7a" stroke-width="2"/>
+      <text x="20" y="34.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#3cff7a">T</text>
+      <rect x="14" y="60" width="12" height="4" fill="#2a2a2a"/>
+      <g class="flame">
+        <ellipse cx="20" cy="72" rx="6" ry="10" fill="#ffb43c"/>
+        <ellipse cx="20" cy="70" rx="3" ry="6" fill="#3cff7a"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wall">
+  <header class="bar">
+    <b>SWARM TESTER</b>
+    <nav aria-label="Sections">
+      <a href="#lab">Lab</a>
+      <a href="#machine">Machine</a>
+      <a href="#how">How to buy</a>
+      <a href="#lore">Lore</a>
+      <a href="#tokenomics">Tokenomics</a>
+    </nav>
+    <div class="bar-right">
+      <span class="leds" aria-hidden="true"><i></i><i></i><i></i></span>
+      <button type="button" class="sw" id="motion" aria-pressed="true">Run animations</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="term" aria-labelledby="name">
+      <div class="term-head">
+        <span>⠿ lab workers <b id="workers">8</b> online</span>
+        <span>chain <b id="chain">—</b></span>
+        <span>status <b id="status">launching…</b></span>
+      </div>
+      <div class="term-body">
+        <div class="crt-frame">
+          <img class="logo" id="logo" src="./assets/logo.png" width="99" height="134" alt="Swarm Tester logo: a Pepe engineer in a blue lab coat standing in a hall of retro computers">
+        </div>
+        <div>
+          <h1 class="name" id="name">Swarm Tester</h1>
+          <p class="ticker" id="ticker">$TESTER</p>
+          <p class="desc" id="desc">Swarm Lab is the workshop of the swarm: a hall of retro computers where Pepe engineers build in real time while Pepe Einstein invents the next big thing.</p>
+          <div class="ctas">
+            <a class="btn" id="buy" href="https://www.si-md.xyz/launchpad/">Buy $TESTER</a>
+            <a class="btn ghost" id="chart" href="https://www.si-md.xyz/launchpad/">View chart</a>
+          </div>
+        </div>
+      </div>
+      <pre class="log" id="log" aria-label="Lab terminal log"></pre>
+      <div class="prompt" aria-hidden="true">&gt; ▌ tail -f swarm-lab.log</div>
+    </section>
+
+    <section class="lcds" aria-label="Live market readouts">
+      <div class="lcd"><small>Market cap</small><b id="mc">—</b></div>
+      <div class="lcd"><small>Price</small><b id="price">—</b></div>
+      <div class="lcd"><small>24h volume</small><b id="vol">—</b></div>
+      <div class="lcd"><small>Contract</small><div class="ca"><b><code id="ca">launching…</code></b><button type="button" id="copy" disabled>Copy</button></div></div>
+    </section>
+
+    <section class="lab" id="lab" aria-labelledby="lab-h">
+      <div class="lab-head">
+        <h2 id="lab-h">Swarm Lab</h2>
+        <p class="lab-sub">Rows of Pepe engineers at glowing terminals. They type, they compile, and every finished build throws sparks.</p>
+        <p class="lcd inline"><small>Builds shipped</small><b id="built">0</b></p>
+      </div>
+      <ul class="ws-grid" id="workers-grid" aria-hidden="true"></ul>
+    </section>
+
+    <section class="machine" id="machine" aria-labelledby="machine-h">
+      <div class="machine-head">
+        <h2 id="machine-h">Einstein's machine</h2>
+        <p>It powers up when you scroll to it. Turn the dials, throw the levers, and press BUILD to launch a coin rocket.</p>
+      </div>
+      <div class="machine-body">
+        <div class="gadget" id="gadget">
+          <div class="gadget-top">
+            <svg class="einstein" aria-hidden="true" focusable="false"><use href="#einstein"/></svg>
+            <div class="core" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="bay" id="bay" aria-hidden="true">
+              <svg class="rocket" id="rocket" viewBox="0 0 40 84"><use href="#rocket-shape"/></svg>
+            </div>
+          </div>
+          <svg class="scope" viewBox="0 0 320 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <g class="grid"><path d="M0 45 H320 M80 0 V90 M160 0 V90 M240 0 V90"/></g>
+            <g class="trace"><path id="trace-a" d="M0 45 H320"/><path id="trace-b" d="M0 45 H320"/></g>
+          </svg>
+          <div class="readouts">
+            <p class="lcd inline"><small>Power</small><b id="power">0%</b></p>
+            <p class="lcd inline"><small>Core</small><b id="core-out">cold</b></p>
+            <p class="lcd inline"><small>Rockets</small><b id="launched">0</b></p>
+          </div>
+        </div>
+
+        <div class="deck">
+          <div class="dials">
+            <div class="ctl">
+              <button type="button" class="dial" id="freq" aria-label="Turn the frequency dial" aria-describedby="freq-out"><i></i></button>
+              <span class="ctl-label">Freq</span>
+              <output class="readout" id="freq-out">4.0 MHz</output>
+            </div>
+            <div class="ctl">
+              <button type="button" class="dial" id="gain" aria-label="Turn the gain dial" aria-describedby="gain-out"><i></i></button>
+              <span class="ctl-label">Gain</span>
+              <output class="readout" id="gain-out">50%</output>
+            </div>
+          </div>
+          <div class="levers">
+            <div class="ctl">
+              <button type="button" class="lever" id="coolant" aria-pressed="false"><span class="lever-track"><span class="lever-knob"></span></span><span class="lever-text">Coolant</span></button>
+              <output class="readout" id="coolant-out">off</output>
+            </div>
+            <div class="ctl">
+              <button type="button" class="lever" id="overdrive" aria-pressed="false"><span class="lever-track"><span class="lever-knob"></span></span><span class="lever-text">Overdrive</span></button>
+              <output class="readout" id="overdrive-out">off</output>
+            </div>
+          </div>
+          <div class="build-row">
+            <button type="button" class="btn build" id="build">Build</button>
+            <div class="build-bar" aria-hidden="true"><i id="build-fill"></i></div>
+          </div>
+          <p class="machine-status" id="machine-status" role="status" aria-live="polite">Machine idle. Scroll here or press Build to power it up.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mods" aria-label="About the coin">
+      <article class="mod" id="how">
+        <div class="dial-deco" aria-hidden="true"></div>
+        <h2>How to buy</h2>
+        <ol>
+          <li>Get IMD on Ethereum. It is the currency the pool is paired with.</li>
+          <li>Open <a id="buy-link" href="https://www.si-md.xyz/launchpad/">$TESTER on the SIMD Launchpad</a>.</li>
+          <li>Swap IMD for TESTER in the Uniswap v4 pool from that page.</li>
+        </ol>
+        <p class="note">This site never asks you to connect a wallet. Trade only on the launchpad page.</p>
+      </article>
+      <article class="mod" id="lore">
+        <h2>Lore</h2>
+        <p>Swarm Lab is the workshop of the swarm: a hall of retro computers where Pepe engineers build in real time while Pepe Einstein invents the next big thing.</p>
+        <p>This page is the lab's control room. The engineers at the terminals type and compile around the clock, and the machine in the middle is Einstein's latest gadget. It wakes up when you reach it, its levers and dials answer to your clicks, and the BUILD button launches a $TESTER rocket. It is a toy: nothing here collects data.</p>
+      </article>
+      <article class="mod" id="tokenomics">
+        <h2>Tokenomics</h2>
+        <dl class="specs">
+          <div><dt>Supply</dt><dd>1,000,000,000 TESTER, 18 decimals, minted once to the deployer</dd></div>
+          <div><dt>Minting</dt><dd>None after launch. The supply is fixed forever</dd></div>
+          <div><dt>Transfers</dt><dd>Plain ERC-20. No fee, tax, limit, owner or admin</dd></div>
+          <div><dt>Pool</dt><dd>90% seeds a Uniswap v4 pool paired with IMD on Ethereum (1.25% pool fee)</dd></div>
+          <div><dt>Swarm</dt><dd>10% goes to the agents that built it, through the launch's Merkle distributor</dd></div>
+          <div><dt>Remainder</dt><dd>Anything left over goes to the 0x…dead address</dd></div>
+          <div><dt>Contract</dt><dd>TESTERToken, Solidity 0.8.26, no proxy, no upgrade</dd></div>
+        </dl>
+      </article>
+    </section>
+  </main>
+
+  <footer>Built 100% by the Identity.md swarm · launched on <a href="https://www.si-md.xyz/launchpad/">si-md.xyz/launchpad</a> · not financial advice</footer>
+</div>
+<script src="./app.js"></script>
+</body>
+</html>
